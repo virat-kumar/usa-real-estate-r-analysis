@@ -30,6 +30,10 @@ jobs:
         run: Rscript tests/smoke.R
       - name: Run full R analysis
         run: Rscript scripts/analysis.R
+      - name: Comprehensive R EDA and modeling-ready splits
+        run: Rscript EDA/eda.R
+      - name: Validate EDA outputs and zero cross-split surrogate overlap
+        run: Rscript tests/eda/test_outputs.R
       - name: Ensure no Kaggle data in git
         shell: bash
         run: |

@@ -62,3 +62,18 @@ The exact **listing collection period is undocumented**. \`prev_sold_date\` repr
 
 Run \`Rscript setup.R --skip-data\` and \`Rscript tests/smoke.R\` before a pull request. GitHub Actions tests setup and R helpers on Windows and Ubuntu. Raw Kaggle data, outputs and local environments must not be committed. Kaggle labels the dataset license "Other (specified in description)"; follow its terms.
 
+
+
+## Comprehensive incremental EDA (16 charts)
+
+This repo now includes a [full R EDA report with 16 inline figures](EDA/README.md), a [micro-step execution plan](EDA/EDA_PLAN.md), and a [modeling handoff](modeling/README.md). The EDA explores data quality, missingness, outliers, geography, log transformations, correlations, statistical tests and creates local leakage-audited train/validation/test tables.
+
+Run after setup:
+
+~~~sh
+Rscript EDA/eda.R
+Rscript tests/eda/test_outputs.R
+~~~
+
+**Only R source, README reports, and small charts are on GitHub**; Kaggle CSV, local model datasets and diagnostic tabular exports remain ignored.
+

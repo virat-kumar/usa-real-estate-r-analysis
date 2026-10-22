@@ -16,3 +16,7 @@ Thumbs.db
 
 
 .bootstrap-lib/
+
+# Local modeling data, diagnostic exports and transient reports
+data/processed/
+EDA/reports/
