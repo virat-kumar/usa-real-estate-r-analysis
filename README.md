@@ -77,3 +77,15 @@ Rscript tests/eda/test_outputs.R
 
 **Only R source, README reports, and small charts are on GitHub**; Kaggle CSV, local model datasets and diagnostic tabular exports remain ignored.
 
+
+## Four-model R selection and hyperparameter tuning
+
+The [modeling workspace](modeling/README.md) now contains **four regression strategies** (log-linear regression, CART, randomized bagged CART and gradient-boosted CART) in [model_selection.R](modeling/model_selection.R), with the nine-trial search in [model_fine_tuning.R](modeling/model_fine_tuning.R).
+
+Both stages have individual, business-facing reports, each with **12 plots**:
+- [Model selection report and figures](modeling/model_selection/report.md)
+- [Model fine-tuning, held-out evaluation and figures](modeling/model_fine_tuning/report.md)
+
+Run `Rscript modeling/model_selection.R` and `Rscript modeling/model_fine_tuning.R` after setup and EDA. An explicit `Rscript modeling/model_fine_tuning.R --final-test` evaluates the held-out test **only once after parameter lock** on a fresh run.
+
+The completed locked test yielded **$257,631 MAE**, **$710,981 RMSE**, and **0.480 R²** on 137,689 properties. Severe error bias in low-end/luxury homes means predictions must remain human-reviewed; this is not a live real-estate appraisal or ROI model. Kaggle records, processed data, predictions, fitted models and logs are excluded from GitHub.

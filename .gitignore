@@ -20,3 +20,6 @@ Thumbs.db
 # Local modeling data, diagnostic exports and transient reports
 data/processed/
 EDA/reports/
+
+# Predictive modeling only local data and models
+modeling/artifacts/

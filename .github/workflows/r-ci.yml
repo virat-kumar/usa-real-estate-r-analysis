@@ -34,9 +34,15 @@ jobs:
         run: Rscript EDA/eda.R
       - name: Validate EDA outputs and zero cross-split surrogate overlap
         run: Rscript tests/eda/test_outputs.R
+      - name: Smoke-test four R model families (no holdout test)
+        run: Rscript tests/modeling/test_functions.R
+      - name: Check model-report images and links
+        run: Rscript tests/modeling/test_reports.R
       - name: Ensure no Kaggle data in git
         shell: bash
         run: |
           test -z "$(git ls-files 'data/raw/*.csv')"
           test -z "$(git ls-files 'data/raw/*.zip')"
+          test -z "$(git ls-files 'data/processed/*.csv')"
+          test -z "$(git ls-files 'modeling/artifacts/*')"
 
