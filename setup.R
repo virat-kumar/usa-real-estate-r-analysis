@@ -30,8 +30,8 @@ if (!("--data-only" %in% args)) {
 if (!("--skip-data" %in% args)) {
   cat("[2/2] Downloading or verifying Kaggle dataset...\n")
   candidates <- if (.Platform$OS.type == "windows") {
-    list(list(cmd = "py", prefix = "-3"),
-         list(cmd = "python", prefix = character()))
+    list(list(cmd = "python", prefix = character()),
+         list(cmd = "py", prefix = "-3"))
   } else {
     list(list(cmd = "python3", prefix = character()),
          list(cmd = "python", prefix = character()))
