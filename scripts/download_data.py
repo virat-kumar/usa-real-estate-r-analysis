@@ -3,6 +3,8 @@
 import csv
 import hashlib
 import sys
+import tempfile
+import shutil
 from pathlib import Path
 import kagglehub
 
@@ -33,8 +35,16 @@ def main():
     dest.mkdir(parents=True, exist_ok=True)
     csv_path = dest / NAME
     if not csv_path.exists():
-        print("Downloading directly from official Kaggle with KaggleHub...")
-        kagglehub.dataset_download(DATASET, output_dir=str(dest))
+        print("Downloading directly from official Kaggle with KaggleHub...", flush=True)
+        # KaggleHub requires an EMPTY output_dir. The project raw directory
+        # intentionally contains .gitignore; a clean temporary staging
+        # directory is therefore required on Windows and Linux.
+        with tempfile.TemporaryDirectory(prefix="kaggle-real-estate-") as temp_dir:
+            staged_dir = Path(temp_dir)
+            kagglehub.dataset_download(DATASET, output_dir=str(staged_dir))
+            staged_file = staged_dir / NAME
+            verify(staged_file)
+            shutil.move(str(staged_file), str(csv_path))
     else:
         print("Found local original dataset; verifying before reuse.")
     verify(csv_path)

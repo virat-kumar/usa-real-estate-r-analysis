@@ -17,7 +17,9 @@ jobs:
           r-version: '4.5.3'
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
+      - name: Verify Python runtime
+        run: python --version
       - name: Universal setup including official Kaggle download
         run: Rscript setup.R
       - name: Test R workflow
