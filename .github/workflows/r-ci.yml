@@ -1,0 +1,32 @@
+name: R cross-platform smoke tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  smoke:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.5.3'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Universal setup including official Kaggle download
+        run: Rscript setup.R
+      - name: Test R workflow
+        run: Rscript tests/smoke.R
+      - name: Run full R analysis
+        run: Rscript scripts/analysis.R
+      - name: Ensure no Kaggle data in git
+        shell: bash
+        run: |
+          test -z "$(git ls-files 'data/raw/*.csv')"
+          test -z "$(git ls-files 'data/raw/*.zip')"
+
